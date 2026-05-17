@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-numeric: 'Space Grotesk', 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --text-2xs: 0.625rem;
+  --text-2xs--line-height: 0.875rem;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /*
+    Typography rules:
+    - type-display: first-screen product/page hero only.
+    - type-page-title: route/detail page title.
+    - type-section-title: panel/card/table section heading.
+    - type-card-title: repeated item/card primary label.
+    - type-body: normal reading text.
+    - type-body-muted: supporting copy.
+    - type-caption: metadata, helper text, timestamps.
+    - type-label: form labels and compact controls.
+    - type-overline: uppercase grouping labels only.
+    - type-button: command text inside buttons.
+    - type-metric: dashboard numbers.
+    - type-number: compact numeric values, timestamps, cost, latency, percentages, counts.
+    - type-code: ids, model keys, costs, latency, and tokens.
+  */
+  .type-display {
+    @apply font-heading text-4xl font-semibold leading-tight tracking-normal text-gray-900;
+  }
+
+  .type-page-title {
+    @apply font-heading text-xl font-semibold leading-7 tracking-normal text-gray-900;
+  }
+
+  .type-section-title {
+    @apply font-heading text-sm font-semibold leading-5 tracking-normal text-gray-800;
+  }
+
+  .type-card-title {
+    @apply font-heading text-sm font-semibold leading-5 tracking-normal text-gray-900;
+  }
+
+  .type-body {
+    @apply text-sm font-normal leading-5 tracking-normal text-gray-700;
+  }
+
+  .type-body-muted {
+    @apply text-sm font-normal leading-5 tracking-normal text-gray-500;
+  }
+
+  .type-caption {
+    @apply text-xs font-normal leading-4 tracking-normal text-gray-400;
+  }
+
+  .type-label {
+    @apply text-xs font-medium leading-4 tracking-normal text-zinc-500;
+  }
+
+  .type-overline {
+    @apply text-xs font-semibold leading-4 uppercase tracking-widest text-gray-400;
+  }
+
+  .type-button {
+    @apply font-medium tracking-normal;
+  }
+
+  .type-badge-inline {
+    @apply inline-flex items-baseline gap-1 leading-4;
+  }
+
+  .type-badge-number {
+    @apply inline-flex items-baseline font-numeric leading-4 tabular-nums;
+  }
+
+  .type-metric {
+    @apply font-numeric text-2xl font-semibold leading-none tracking-normal tabular-nums text-gray-900;
+  }
+
+  .type-number {
+    @apply font-numeric text-xs leading-4 tracking-normal tabular-nums text-gray-700;
+  }
+
+  .type-code {
+    @apply font-mono text-xs leading-4 tracking-normal tabular-nums text-gray-700;
+  }
+
+  .type-table-head {
+    @apply text-xs font-medium leading-4 tracking-normal text-zinc-500;
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #d4d4d8;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f4f4f5;
+}

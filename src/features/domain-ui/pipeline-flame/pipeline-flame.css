@@ -1,0 +1,120 @@
+.detail-fade-enter-active,
+.detail-fade-leave-active {
+  transition: opacity 80ms ease;
+}
+
+.detail-fade-enter-from,
+.detail-fade-leave-to {
+  opacity: 0;
+}
+
+.flame-root {
+  overflow: visible;
+}
+
+.flame-bar {
+  contain: layout paint;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.flame-track {
+  overflow: hidden;
+}
+
+.flame-lane {
+  border-radius: 0;
+  background-image: linear-gradient(to right, rgba(148, 163, 184, 0.13) 1px, transparent 1px);
+  background-size: 25% 100%;
+  box-shadow: inset 0 -1px 0 rgba(226, 232, 240, 0.86);
+}
+
+.flame-lane-even {
+  background-color: #f8fafc;
+}
+
+.flame-lane-odd {
+  background-color: #ffffff;
+}
+
+.flame-lane-label {
+  width: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 10px;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  box-shadow:
+    inset -1px 0 0 rgba(226, 232, 240, 0.95),
+    inset 0 -1px 0 rgba(226, 232, 240, 0.86);
+}
+
+.flame-segment {
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 1px rgba(15, 23, 42, 0.08),
+    0 1px 2px rgba(15, 23, 42, 0.1);
+  transition:
+    filter 90ms ease,
+    box-shadow 90ms ease;
+}
+
+.flame-segment:hover {
+  z-index: 10;
+  box-shadow:
+    inset 0 0 0 1px rgba(15, 23, 42, 0.12),
+    0 0 0 2px rgba(15, 23, 42, 0.1),
+    0 4px 8px rgba(15, 23, 42, 0.14);
+}
+
+.flame-segment-critical {
+  z-index: 2;
+  box-shadow:
+    inset 0 0 0 1px rgba(127, 29, 29, 0.34),
+    0 0 0 2px rgba(248, 113, 113, 0.2),
+    0 2px 6px rgba(127, 29, 29, 0.18);
+}
+
+.flame-fill {
+  animation: flame-grow 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  border-radius: inherit;
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
+
+.flame-axis {
+  animation: flame-reveal 180ms ease-out both;
+}
+
+@keyframes flame-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes flame-grow {
+  from {
+    opacity: 0.35;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flame-fill,
+  .flame-axis {
+    animation: none;
+  }
+}

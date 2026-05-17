@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 8" fill="currentColor">
+  <circle cx="4" cy="4" r="3.5" class="tw-v-loading-dot tw-v-loading-dot-1"/>
+  <circle cx="16" cy="4" r="3.5" class="tw-v-loading-dot tw-v-loading-dot-2"/>
+  <circle cx="28" cy="4" r="3.5" class="tw-v-loading-dot tw-v-loading-dot-3"/>
+</svg>
