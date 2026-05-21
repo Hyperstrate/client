@@ -44,6 +44,21 @@ Use it to:
 | Access control      | API keys, virtual keys, teams, org users, spend caps, SSO group mapping                                     |
 | MCP                 | Register org-scoped Model Context Protocol servers for use inside router pipelines                          |
 
+## How Hyperstrate Compares
+
+Hyperstrate Client is not just a dashboard for logs. It is the control plane for a self-hosted AI gateway: teams can design routing behavior, attach policy, inspect traces, and manage access without spreading those workflows across several tools.
+
+| Compared With              | Good Fit Elsewhere                                                                 | Hyperstrate Client Difference                                                                                              |
+| -------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| LiteLLM dashboards         | Operating a lightweight OpenAI-compatible proxy with virtual keys and spend limits | Adds a visual router builder, pipeline/interceptor editing, prompt/eval workflows, org governance, and trace inspection     |
+| Portkey or Helicone        | Managed gateway and observability products with polished hosted workflows          | Pairs with an open-source server you run yourself, so provider credentials, logs, policies, and tenant data stay under your control |
+| Langfuse or LangSmith      | Application tracing, prompt lifecycle, datasets, experiments, and eval review      | Controls the live gateway path too: targets, retries, fallbacks, budgets, safety interceptors, virtual keys, and MCP tools  |
+| OpenRouter console         | Browsing and calling many hosted models through one provider account               | Lets teams bring their own provider accounts, private models, self-hosted endpoints, access rules, and retention policies   |
+| Generic API gateway UIs    | Managing normal HTTP APIs, auth, rate limits, plugins, and fleet traffic           | Models AI-specific concepts directly: provider models, token costs, router traces, prompt versions, evals, and team budgets |
+| Internal admin panels      | One-off operations for a single product or narrow workflow                         | Provides a full gateway workspace that product, platform, and AI teams can share instead of rebuilding the same controls    |
+
+The client is most useful when the gateway is part of product operations, not just infrastructure. If a team needs to explain why a request routed to a model, why it cost what it cost, which policy ran, and how to change that behavior safely, Hyperstrate puts those controls in one place.
+
 ## Product Surface
 
 ### Router Operations
