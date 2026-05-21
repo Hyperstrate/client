@@ -46,18 +46,39 @@ Use it to:
 
 ## How Hyperstrate Compares
 
-Hyperstrate Client is not just a dashboard for logs. It is the control plane for a self-hosted AI gateway: teams can design routing behavior, attach policy, inspect traces, and manage access without spreading those workflows across several tools.
+Hyperstrate Client is the operating surface for a self-hosted AI gateway. It is designed for teams that need to change routing behavior, inspect why traffic moved, and manage access without jumping between a proxy config, an observability tool, and a custom admin panel.
 
-| Compared With              | Good Fit Elsewhere                                                                 | Hyperstrate Client Difference                                                                                              |
-| -------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| LiteLLM dashboards         | Operating a lightweight OpenAI-compatible proxy with virtual keys and spend limits | Adds a visual router builder, pipeline/interceptor editing, prompt/eval workflows, org governance, and trace inspection     |
-| Portkey or Helicone        | Managed gateway and observability products with polished hosted workflows          | Pairs with an open-source server you run yourself, so provider credentials, logs, policies, and tenant data stay under your control |
-| Langfuse or LangSmith      | Application tracing, prompt lifecycle, datasets, experiments, and eval review      | Controls the live gateway path too: targets, retries, fallbacks, budgets, safety interceptors, virtual keys, and MCP tools  |
-| OpenRouter console         | Browsing and calling many hosted models through one provider account               | Lets teams bring their own provider accounts, private models, self-hosted endpoints, access rules, and retention policies   |
-| Generic API gateway UIs    | Managing normal HTTP APIs, auth, rate limits, plugins, and fleet traffic           | Models AI-specific concepts directly: provider models, token costs, router traces, prompt versions, evals, and team budgets |
-| Internal admin panels      | One-off operations for a single product or narrow workflow                         | Provides a full gateway workspace that product, platform, and AI teams can share instead of rebuilding the same controls    |
+```text
+Design                 Operate                Improve
+------                 -------                -------
+routers + policies ->  live gateway traces -> prompts + evals
+provider keys          teams + virtual keys    cost and quality reviews
+MCP tools              budgets + limits        replay and regression checks
+```
 
-The client is most useful when the gateway is part of product operations, not just infrastructure. If a team needs to explain why a request routed to a model, why it cost what it cost, which policy ran, and how to change that behavior safely, Hyperstrate puts those controls in one place.
+Legend: `built-in` means first-class UI, `partial` means possible but narrower, `external` means another tool or custom UI is usually needed, and `hosted` means the main console is outside your stack.
+
+| UI Job | LiteLLM Dashboards | Portkey / Helicone | Langfuse / LangSmith | OpenRouter Console | Internal Admin Panels | Hyperstrate Client |
+| --- | --- | --- | --- | --- | --- | --- |
+| Build routers visually | partial | partial | not focus | no | custom | built-in |
+| Edit live gateway policy | built-in | built-in | not focus | partial | custom | built-in |
+| Manage providers and key rotation | built-in | partial | external | hosted | custom | built-in |
+| Explain why a request routed | partial | built-in | app traces | partial | custom | built-in |
+| Inspect cost, latency, cache, and errors | partial | built-in | built-in | partial | custom | built-in |
+| Manage orgs, teams, API keys, and virtual keys | built-in | built-in | partial | partial | custom | built-in |
+| Manage prompts, versions, and evals | partial | partial | built-in | no | custom | built-in |
+| Operate against a self-hosted server and database | built-in | varies | varies | hosted | built-in | built-in |
+
+### When The UI Matters
+
+| Choose | When It Is The Better Fit |
+| --- | --- |
+| LiteLLM dashboards | You need a practical proxy console for keys, budgets, models, and spend controls |
+| Portkey or Helicone | You want a managed gateway/observability console and are comfortable with hosted operations |
+| Langfuse or LangSmith | Your core workflow is tracing application runs, reviewing prompts, managing datasets, and running experiments |
+| OpenRouter console | You primarily need to browse, select, and call hosted models through one provider account |
+| Internal admin panels | Your workflow is narrow enough that a custom screen around your own database is cheaper to maintain |
+| Hyperstrate Client | Router design, provider operations, access control, traces, prompts, evals, and team governance all need to live together |
 
 ## Product Surface
 
