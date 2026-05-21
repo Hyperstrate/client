@@ -46,39 +46,44 @@ Use it to:
 
 ## How Hyperstrate Compares
 
-Hyperstrate Client is the operating surface for a self-hosted AI gateway. It is designed for teams that need to change routing behavior, inspect why traffic moved, and manage access without jumping between a proxy config, an observability tool, and a custom admin panel.
+Legend: `✓` = built in, `x` = not the product's focus, Partial<sup>N</sup> = possible, but with an important caveat below.
 
-```text
-Design                 Operate                Improve
-------                 -------                -------
-routers + policies ->  live gateway traces -> prompts + evals
-provider keys          teams + virtual keys    cost and quality reviews
-MCP tools              budgets + limits        replay and regression checks
-```
-
-Legend: `built-in` means first-class UI, `partial` means possible but narrower, `external` means another tool or custom UI is usually needed, and `hosted` means the main console is outside your stack.
-
-| UI Job | LiteLLM Dashboards | Portkey / Helicone | Langfuse / LangSmith | OpenRouter Console | Internal Admin Panels | Hyperstrate Client |
+| UI Capability | LiteLLM Dashboards | Portkey / Helicone | Langfuse / LangSmith | OpenRouter Console | Internal Admin Panels | Hyperstrate Client |
 | --- | --- | --- | --- | --- | --- | --- |
-| Build routers visually | partial | partial | not focus | no | custom | built-in |
-| Edit live gateway policy | built-in | built-in | not focus | partial | custom | built-in |
-| Manage providers and key rotation | built-in | partial | external | hosted | custom | built-in |
-| Explain why a request routed | partial | built-in | app traces | partial | custom | built-in |
-| Inspect cost, latency, cache, and errors | partial | built-in | built-in | partial | custom | built-in |
-| Manage orgs, teams, API keys, and virtual keys | built-in | built-in | partial | partial | custom | built-in |
-| Manage prompts, versions, and evals | partial | partial | built-in | no | custom | built-in |
-| Operate against a self-hosted server and database | built-in | varies | varies | hosted | built-in | built-in |
+| Visual graph router builder | Partial<sup>1</sup> | Partial<sup>2</sup> | x | x | Partial<sup>3</sup> | ✓ |
+| Configure targets, features, and interceptors together | Partial<sup>4</sup> | Partial<sup>5</sup> | x | x | Partial<sup>3</sup> | ✓ |
+| Manage provider models and key rotation | Partial<sup>6</sup> | Partial<sup>7</sup> | x | x | Partial<sup>3</sup> | ✓ |
+| Test a router and inspect each routing step | Partial<sup>8</sup> | Partial<sup>9</sup> | Partial<sup>10</sup> | Partial<sup>11</sup> | Partial<sup>3</sup> | ✓ |
+| Manage teams, API keys, virtual keys, and budgets | ✓ | ✓ | Partial<sup>12</sup> | Partial<sup>13</sup> | Partial<sup>3</sup> | ✓ |
+| Prompt editor with versions and restore | Partial<sup>14</sup> | Partial<sup>15</sup> | ✓ | x | Partial<sup>3</sup> | ✓ |
+| Eval sets and router regression runs | x | Partial<sup>16</sup> | ✓ | x | Partial<sup>3</sup> | ✓ |
+| MCP server management for gateway tools | x | x | x | x | Partial<sup>3</sup> | ✓ |
+| Agent-session analytics and replay | x | Partial<sup>17</sup> | ✓ | x | Partial<sup>3</sup> | ✓ |
+| UI paired with a self-hosted gateway database | ✓ | Partial<sup>18</sup> | Partial<sup>19</sup> | x | ✓ | ✓ |
 
-### When The UI Matters
+Notes:
 
-| Choose | When It Is The Better Fit |
+| Note | Comment |
 | --- | --- |
-| LiteLLM dashboards | You need a practical proxy console for keys, budgets, models, and spend controls |
-| Portkey or Helicone | You want a managed gateway/observability console and are comfortable with hosted operations |
-| Langfuse or LangSmith | Your core workflow is tracing application runs, reviewing prompts, managing datasets, and running experiments |
-| OpenRouter console | You primarily need to browse, select, and call hosted models through one provider account |
-| Internal admin panels | Your workflow is narrow enough that a custom screen around your own database is cheaper to maintain |
-| Hyperstrate Client | Router design, provider operations, access control, traces, prompts, evals, and team governance all need to live together |
+| <sup>1</sup> | LiteLLM dashboards are useful for proxy operations, keys, models, and spend, but router composition is still mostly config-driven. |
+| <sup>2</sup> | Portkey and Helicone expose gateway configuration, but the workflow is not primarily a graph builder for self-hosted router pipelines. |
+| <sup>3</sup> | Internal admin panels can do anything you build, but every capability here becomes your own design, implementation, maintenance, and security work. |
+| <sup>4</sup> | LiteLLM handles models, routing, keys, budgets, and callbacks, but Hyperstrate groups targets, features, and interceptors as explicit router-building blocks. |
+| <sup>5</sup> | Managed gateways support routing and guardrails, but the exact shape depends on product mode and plan. |
+| <sup>6</sup> | LiteLLM supports model and key management, but key rotation UX and provider operations depend on proxy/database configuration. |
+| <sup>7</sup> | Managed products support provider configuration, but credentials may live in the hosted control plane unless you use BYOK or self-hosted options. |
+| <sup>8</sup> | LiteLLM can log proxy behavior, but step-by-step route explanation depends on callbacks and observability setup. |
+| <sup>9</sup> | Managed gateways can explain request behavior well, but traces usually live in their hosted product. |
+| <sup>10</sup> | Langfuse and LangSmith trace application runs; they do not own the gateway router unless you wire that data in. |
+| <sup>11</sup> | OpenRouter shows model/provider behavior, but not your internal router pipeline or team policy decisions. |
+| <sup>12</sup> | Langfuse and LangSmith have workspace/project controls, but not gateway-native virtual keys and spend enforcement by default. |
+| <sup>13</sup> | OpenRouter has account/key controls, but not the same as tenant teams, internal virtual keys, and per-router budgets. |
+| <sup>14</sup> | LiteLLM can integrate with prompt/observability tooling, but prompt editing is not the dashboard's main job. |
+| <sup>15</sup> | Portkey and Helicone include prompt-management or prompt-adjacent workflows depending on product and plan. |
+| <sup>16</sup> | Managed products can support eval-like or testing workflows, but router regression runs are not always first-class. |
+| <sup>17</sup> | Managed observability products can support sessions or traces, but agent replay depth varies by product. |
+| <sup>18</sup> | Helicone has open-source/self-hosting options; Portkey's common workflow is hosted or managed. Deployment model depends on product tier and edition. |
+| <sup>19</sup> | Langfuse can be self-hosted; LangSmith deployment depends on plan. They are observability/eval systems, not the gateway database by default. |
 
 ## Product Surface
 
