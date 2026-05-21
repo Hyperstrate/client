@@ -18,6 +18,7 @@
 </p>
 
 ---
+<img src="https://raw.githubusercontent.com/Hyperstrate/client/refs/heads/master/home-gif.gif" width="100%" style="object-fit: cover;" />
 
 ## What Is Hyperstrate Client?
 
