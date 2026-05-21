@@ -1,11 +1,11 @@
 # Hyperstrate Client
 
 <p align="center">
-  <strong>The open-source control plane for building, operating, and observing AI gateways.</strong>
+  <strong>Open-source AI gateway control plane with visual router pipelines, provider management, prompts, evals, MCP tools, virtual keys, teams, SSO groups, analytics, and observability.</strong>
 </p>
 
 <p align="center">
-  Manage model providers, router pipelines, prompts, evaluations, MCP tools, team access, virtual keys, and production analytics from one modern Vue application.
+  Build, operate, and observe production AI gateways from one modern Vue and TypeScript workspace.
 </p>
 
 <p align="center">
