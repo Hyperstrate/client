@@ -11,6 +11,7 @@ import { Component, Model, Watch } from 'vue-facing-decorator'
 
 export type SearchFnReturnType<T = unknown> = { items: T[]; meta: HyperstrateServerInternalSharedPaginationPaginatedMeta }
 export type SearchFnArgs = { search?: string; page: number; perPage: number }
+type DebouncedSearch = () => Promise<void>
 type IdOnlyValue = { id?: string }
 
 @Component
@@ -34,9 +35,9 @@ export class InputComboboxSearch<T = unknown, K extends boolean = boolean> exten
   private metaCache = new Map<string, HyperstrateServerInternalSharedPaginationPaginatedMeta>()
   protected searchItems = new Set<string>()
   private resolvingIds = new Set<string>()
-  private _debouncedSearch?: InputComboboxSearch['asyncData']
+  protected _debouncedSearch?: DebouncedSearch
 
-  private get debouncedSearch(): Exclude<InputComboboxSearch['_debouncedSearch'], undefined> {
+  protected get debouncedSearch(): DebouncedSearch {
     if (!this._debouncedSearch) {
       this._debouncedSearch = debounceAsyncCancelable(() => this.asyncData(), this.debounceMs)
     }

@@ -1,5 +1,5 @@
 <template lang="pug">
-ui-input-combobox(v-model="model" :options="options" :multiple="multiple" :filter-function="filterFn" @search="onSearch")
+ui-input-combobox(v-model="model" :options="options" :loading="loading" :multiple="multiple" :filter-function="filterFn" @search="onSearch")
   template(#selected-multiple="{ displayValue, count }")
     div(class="flex items-center gap-2 w-full min-w-0")
       span(class="flex-1 min-w-0 truncate text-sm text-zinc-900") {{ displayValue }}
@@ -26,67 +26,40 @@ import { HyperstrateApi, HyperstrateServerInternalModulesAiDomainModelDefinition
 import ApiClientsMixin from '@/features/core/components/mixins/api-clients.mixin'
 import ModelsMixin from '@/features/core/components/mixins/models.mixin'
 import { HYPERSTRATE_API } from '@/features/core/container/api/hyperstrate-api.builder'
-import { Input, type Option } from '@/features/ui/inputs/model'
-import { AsyncData } from '@/util/async-data.decorator'
-import { debounceAsyncCancelable } from '@/util/debounce-cancelable'
+import { InputComboboxSearch, SearchFnArgs, SearchFnReturnType } from '@/features/ui/inputs/InputComboboxSearch'
 import { Mixins } from '@/util/mixin'
-import { BooleanProp } from '@/util/prop-decorators'
-import { isArray } from 'lodash'
-import { Component, Model } from 'vue-facing-decorator'
+import { Component } from 'vue-facing-decorator'
 
 type ModelDefinition = HyperstrateServerInternalModulesAiDomainModelDefinition
 
 @Component
-export default class InputComboboxModelDefinition extends Mixins(ApiClientsMixin, ModelsMixin) implements Input {
-  @Model()
-  protected model?: Option<ModelDefinition> | Option<ModelDefinition>[]
-
-  @BooleanProp(false)
-  protected readonly multiple!: boolean
-
+export default class InputComboboxModelDefinition extends Mixins(ApiClientsMixin, ModelsMixin, InputComboboxSearch<ModelDefinition>) {
   private get hyperstrateApi(): HyperstrateApi {
     return this.apiClientFactory<HyperstrateApi>(HYPERSTRATE_API)
   }
 
-  public items: ModelDefinition[] = []
-  public search?: string
+  protected pageSize = 1000
 
-  private readonly debouncedFetch = debounceAsyncCancelable(() => this.asyncData(), 150)
-
-  private get options(): Option<ModelDefinition>[] {
-    return this.items.map((item) => ({
-      value: item,
-      label: item.displayName,
-    }))
+  protected async searchFn(args: SearchFnArgs): Promise<SearchFnReturnType<ModelDefinition>> {
+    const { data } = await this.hyperstrateApi.aiCatalogGet({ query: args.search })
+    return {
+      items: data,
+      meta: {
+        count: data.length,
+        page: 1,
+        pages: 1,
+        perPage: data.length,
+        total: data.length,
+      },
+    }
   }
 
-  // Server already filters — skip Reka UI's client-side label filter.
-  public get filterFn(): (options: Option<ModelDefinition>[]) => Option<ModelDefinition>[] {
-    return (options) => options
+  protected getOptionLabel(item: ModelDefinition): string {
+    return item.displayName
   }
 
-  public get normalizedValue(): Option<ModelDefinition> | Option<ModelDefinition>[] | undefined {
-    return this.model
-  }
-
-  public get empty(): boolean {
-    if (isArray(this.model)) return this.model.length === 0
-    return !this.model
-  }
-
-  public get pristine(): boolean {
-    return this.model === undefined
-  }
-
-  @AsyncData()
-  protected async asyncData(): Promise<AsyncData<InputComboboxModelDefinition>> {
-    const { data } = await this.hyperstrateApi.aiCatalogGet({ query: this.search })
-    return { items: data }
-  }
-
-  public onSearch(value: string): void {
-    this.search = value
-    void this.debouncedFetch()
+  protected getOptionId(item: ModelDefinition): string {
+    return item.key
   }
 }
 </script>
