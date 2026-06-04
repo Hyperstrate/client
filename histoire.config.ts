@@ -1,7 +1,7 @@
 import { defineConfig } from 'histoire'
 import { HstVue } from '@histoire/plugin-vue'
 import type { Plugin } from 'vite'
-import { tailwindTokens } from 'histoire/dist/node/builtin-plugins/tailwind-tokens'
+import { tailwindTokens } from 'histoire/dist/node/builtin-plugins/tailwind-tokens.js'
 
 // vue-facing-decorator's ESM build has a circular dependency:
 //   index.js -> mixins.js -> index.js
@@ -24,6 +24,8 @@ export default defineConfig({
   viteIgnorePlugins: ['vite-plugin-vue-devtools', 'vite-plugin-inspect'],
   plugins: [HstVue(), tailwindTokens({ configFile: '' })],
   setupFile: './histoire/setup.ts',
+  // Histoire beta probes generated setup hooks even when real setupFile hooks exist.
+  setupCode: ['export async function setupVue3() {}\nexport async function setupVanilla() {}'],
   vite: {
     plugins: [fixVueFacingDecoratorCircularDep],
     optimizeDeps: {

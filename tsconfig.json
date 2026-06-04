@@ -5,7 +5,7 @@
     "module": "ES2022",
     "noEmit": true,
     "strictNullChecks": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "isolatedModules": true,
     "resolveJsonModule": true,
     "lib": [
@@ -24,6 +24,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "vuex": [
+        "node_modules/vuex/types/index.d.ts"
       ]
     },
     "allowSyntheticDefaultImports": true,

@@ -109,7 +109,7 @@ export default class InputSelect<T = unknown> extends Vue implements Input {
     return this.$attrs.disabled !== undefined && this.$attrs.disabled !== false
   }
 
-  private get attrs(): JsonObject {
+  private get attrs(): Record<string, unknown> {
     return {
       ...this.$attrs,
       open: this.readonly ? false : undefined,
