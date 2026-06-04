@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { shallowMount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 import { API_CLIENT_MAP, CONTAINER, MODELS } from '@/features/core/container'
 import { HYPERSTRATE_API } from '@/features/core/container/api/hyperstrate-api.builder'
-import { InputComboboxSearch, SearchFnArgs, SearchFnReturnType } from '@/features/ui/inputs/InputComboboxSearch'
+import { InputComboboxSearch, type SearchFnArgs, type SearchFnReturnType } from '@/features/ui/inputs/InputComboboxSearch'
 import InputComboboxModelDefinition from './InputComboboxModelDefinition.global.vue'
 
 const catalogItem = {
